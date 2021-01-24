@@ -30,7 +30,7 @@ class CustomCropperViewController: CropperViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isCropBoxPanEnabled = false
-        topBar.isHidden = true
+//        topBar.isHidden = true
         angleRuler.isHidden = true
         aspectRatioPicker.isHidden = true
     }

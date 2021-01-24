@@ -38,7 +38,7 @@ open class CropBox: UIView {
         autoresizingMask = UIView.AutoresizingMask(rawValue: 0)
         addSubview(gridLinesView)
 
-        setupCorners()
+//        setupCorners()
     }
 
     public required init?(coder aDecoder: NSCoder) {

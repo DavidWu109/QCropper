@@ -63,7 +63,7 @@ extension AspectRatioSettable where Self: CropperViewController {
     public func setAspectRatioValue(_ aspectRatioValue: CGFloat) {
         guard aspectRatioValue > 0 else { return }
 
-        topBar.isUserInteractionEnabled = false
+//        topBar.isUserInteractionEnabled = false
         bottomView.isUserInteractionEnabled = false
         aspectRatioLocked = true
         currentAspectRatioValue = aspectRatioValue
@@ -93,9 +93,9 @@ extension AspectRatioSettable where Self: CropperViewController {
         overlay.gridLinesAlpha = 0
 
         matchScrollViewAndCropView(animated: true, targetCropBoxFrame: targetCropBoxFrame, extraZoomScale: extraZoomScale, blurLayerAnimated: true, animations: nil, completion: {
-            self.topBar.isUserInteractionEnabled = true
+//            self.topBar.isUserInteractionEnabled = true
             self.bottomView.isUserInteractionEnabled = true
-            self.updateButtons()
+//            self.updateButtons()
         })
     }
 }

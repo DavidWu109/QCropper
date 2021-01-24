@@ -24,7 +24,7 @@ public enum AspectRatio {
     var description: String {
         switch self {
         case .original:
-            return "ORIGINAL"
+            return "原始"
         case .freeForm:
             return "FREEFORM"
         case .square:

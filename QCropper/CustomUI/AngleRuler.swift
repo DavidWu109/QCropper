@@ -146,11 +146,21 @@ public class AngleRuler: UIControl {
             let x = CGFloat(i) * scaleSpacing + pixelOffset + scrollViewContentInset
 
             if i % numberOfGroupedScales == 0 {
-                whitePath.move(to: CGPoint(x: x, y: lineTop))
-                whitePath.addLine(to: CGPoint(x: x, y: lineBottom))
+                if i % 5 == 0 {
+                    whitePath.move(to: CGPoint(x: x, y: lineTop - 5))
+                    whitePath.addLine(to: CGPoint(x: x, y: lineBottom))
+                }else {
+                    whitePath.move(to: CGPoint(x: x, y: lineTop))
+                    whitePath.addLine(to: CGPoint(x: x, y: lineBottom))
+                }
             } else {
-                grayPath.move(to: CGPoint(x: x, y: lineTop))
-                grayPath.addLine(to: CGPoint(x: x, y: lineBottom))
+                if i % 5 == 0 {
+                    grayPath.move(to: CGPoint(x: x, y: lineTop - 5))
+                    grayPath.addLine(to: CGPoint(x: x, y: lineBottom))
+                }else {
+                    grayPath.move(to: CGPoint(x: x, y: lineTop))
+                    grayPath.addLine(to: CGPoint(x: x, y: lineBottom))
+                }
             }
 
             borderPath.move(to: CGPoint(x: x, y: lineTop - borderWidth))

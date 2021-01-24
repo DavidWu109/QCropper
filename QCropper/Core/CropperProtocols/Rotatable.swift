@@ -46,11 +46,11 @@ extension Rotatable where Self: CropperViewController {
         }
 
         scrollView.contentOffset = safeContentOffsetForScrollView(newContentOffset)
-        updateButtons()
+//        updateButtons()
     }
 
     public func rotate90degrees(clockwise: Bool = true) {
-        topBar.isUserInteractionEnabled = false
+//        topBar.isUserInteractionEnabled = false
         bottomView.isUserInteractionEnabled = false
 
         guard let animationContainer = scrollView.superview else { return }
@@ -132,9 +132,9 @@ extension Rotatable where Self: CropperViewController {
             }, completion: { _ in
                 rotatingOverlay.isHidden = true
                 rotatingOverlay.removeFromSuperview()
-                self.topBar.isUserInteractionEnabled = true
+//                self.topBar.isUserInteractionEnabled = true
                 self.bottomView.isUserInteractionEnabled = true
-                self.updateButtons()
+//                self.updateButtons()
             })
         })
     }

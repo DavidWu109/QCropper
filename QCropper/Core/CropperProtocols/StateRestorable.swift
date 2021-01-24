@@ -77,11 +77,11 @@ extension StateRestorable where Self: CropperViewController {
             self.scrollView.contentOffset = state.scrollViewContentOffset
             self.scrollView.center = state.scrollViewCenter
             self.overlay.cropBoxFrame = state.cropBoxFrame
-            if self.overlay.cropBoxFrame.size.width > self.overlay.cropBoxFrame.size.height {
-                self.aspectRatioPicker.aspectRatios = self.verticalAspectRatios
-            } else {
-                self.aspectRatioPicker.aspectRatios = self.verticalAspectRatios.map { $0.rotated }
-            }
+//            if self.overlay.cropBoxFrame.size.width > self.overlay.cropBoxFrame.size.height {
+//                self.aspectRatioPicker.aspectRatios = self.verticalAspectRatios
+//            } else {
+//                self.aspectRatioPicker.aspectRatios = self.verticalAspectRatios.map { $0.rotated }
+//            }
             self.aspectRatioPicker.rotated = false
             self.aspectRatioPicker.selectedAspectRatio = .freeForm
             self.angleRuler.value = state.straightenAngle * 180 / CGFloat.pi
