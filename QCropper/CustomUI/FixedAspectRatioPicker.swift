@@ -11,6 +11,8 @@ import UIKit
 
 public class FixedAspectRatioPicker: UIView {
 
+    lazy var staticSafeAreaInsets = UIApplication.shared.delegate?.window??.safeAreaInsets ?? UIEdgeInsets.zero
+    
     weak var delegate: AspectRatioPickerDelegate?
 
     var selectedAspectRatio: AspectRatio = .freeForm {
@@ -41,6 +43,8 @@ public class FixedAspectRatioPicker: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        backgroundColor = UIColor.black
+        
         addSubview(scrollView)
         addSubview(label)
         addSubview(titleLb)
@@ -55,6 +59,7 @@ public class FixedAspectRatioPicker: UIView {
     lazy var scrollView: UIView = {
         let sv = UIView(frame: self.bounds)
         sv.backgroundColor = .clear
+        sv.frame.origin.y += 20
 //        sv.decelerationRate = .fast
 //        sv.showsHorizontalScrollIndicator = false
 //        sv.showsVerticalScrollIndicator = false
@@ -64,7 +69,7 @@ public class FixedAspectRatioPicker: UIView {
     lazy var label: UILabel = {
         let text = "尺寸"
         let font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        let label = UILabel(frame: CGRect(origin: CGPoint(x: 15, y: 0),
+        let label = UILabel(frame: CGRect(origin: CGPoint(x: 15, y: 10),
                                           size: CGSize(width: text.width(withFont: font), height: 22)))
         label.alpha = 0.5
         label.textColor = UIColor.white
@@ -79,7 +84,7 @@ public class FixedAspectRatioPicker: UIView {
         let height: CGFloat = 22
         let width = text.width(withFont: font)
         let x = (bounds.size.width - text.width(withFont: font)) / 2
-        let y = bounds.size.height - height
+        let y = bounds.size.height - height - staticSafeAreaInsets.bottom
         let label = UILabel(frame: CGRect(origin: CGPoint(x: x, y: y),
                                           size: CGSize(width: width, height: height)))
         label.textColor = UIColor.white
@@ -93,7 +98,10 @@ public class FixedAspectRatioPicker: UIView {
         let imgHeight: CGFloat = 20
         let imgWidth: CGFloat = 20 + margin * 2
         let button = IconButton("QCropper.crop.cancel")
-        button.frame = CGRect(x: 0, y: bounds.size.height - imgHeight, width: imgWidth, height: imgHeight)
+        button.frame = CGRect(x: 0,
+                              y: bounds.size.height - imgHeight - staticSafeAreaInsets.bottom,
+                              width: imgWidth,
+                              height: imgHeight)
         button.tintColor = UIColor.white
         return button
     }()
@@ -104,12 +112,15 @@ public class FixedAspectRatioPicker: UIView {
         let imgWidth: CGFloat = 20 + margin * 2
         let button = IconButton("QCropper.crop.confirm")
         button.tintColor = UIColor.white
-        button.frame = CGRect(x: bounds.size.width - imgWidth, y: bounds.size.height - imgHeight, width: imgWidth , height: imgHeight)
+        button.frame = CGRect(x: bounds.size.width - imgWidth,
+                              y: bounds.size.height - imgHeight - staticSafeAreaInsets.bottom,
+                              width: imgWidth ,
+                              height: imgHeight)
         return button
     }()
 
     func reloadScrollView() {
-
+        
         scrollView.subviews.forEach { button in
             if button is UIButton {
                 button.removeFromSuperview()
@@ -122,7 +133,7 @@ public class FixedAspectRatioPicker: UIView {
 //        let margin = 2 * padding
         let buttonHeight: CGFloat = 22
 
-        var x: CGFloat = bounds.size.width - padding
+        var x: CGFloat = bounds.size.width
         for i in (0 ..< buttonCount).reversed() {
             let button = UIButton(frame: CGRect.zero)
             button.tag = i
@@ -140,12 +151,12 @@ public class FixedAspectRatioPicker: UIView {
             x -= width
             button.setTitle(title, for: .normal)
             button.frame = CGRect(x: x, y: 0, width: width, height: buttonHeight)
-
+            button.isSelected = i == 0 // 默认选中第一个
             scrollView.addSubview(button)
         }
 
         scrollView.height = buttonHeight
-        scrollView.top = 0
+        scrollView.top = 10
 //        scrollView.right = 0
 //        scrollView.contentSize = CGSize(width: x + padding, height: buttonHeight)
     }

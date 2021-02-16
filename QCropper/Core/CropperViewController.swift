@@ -63,6 +63,8 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     public var isCropBoxPanEnabled: Bool = true
     public var cropContentInset: UIEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
+    let safeAreaInsets = UIApplication.shared.delegate?.window??.safeAreaInsets ?? UIEdgeInsets.zero
+    
     let cropBoxHotArea: CGFloat = 50
     let cropBoxMinSize: CGFloat = 20
     let barHeight: CGFloat = 44
@@ -134,7 +136,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     }()
 
     // MARK: Custom UI
-
+    
     lazy var backgroundView: UIView = {
         let view = UIView(frame: self.view.bounds)
         view.backgroundColor = UIColor(white: 0.06, alpha: 1)
@@ -142,7 +144,8 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     }()
     
     open lazy var bottomView: FixedAspectRatioPicker = {
-        let bottomView: FixedAspectRatioPicker = FixedAspectRatioPicker(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 76))
+        
+        let bottomView: FixedAspectRatioPicker = FixedAspectRatioPicker(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 76 + safeAreaInsets.bottom))
         view.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleWidth]
         bottomView.delegate = self
         bottomView.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
@@ -356,7 +359,8 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
         let margin: CGFloat = 20
 
 //        bottomView.size = CGSize(width: view.width, height: toolbar.height + angleRuler.height + margin)
-        bottomView.bottom = view.height - view.safeAreaInsets.bottom - 15
+//        bottomView.bottom = view.height - view.safeAreaInsets.bottom - 15
+        bottomView.bottom = view.height
         aspectRatioPicker.frame = angleRuler.frame
 
         

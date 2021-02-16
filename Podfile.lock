@@ -1,5 +1,5 @@
 PODS:
-  - QCropper (0.1.4)
+  - QCropper (0.1.5)
 
 DEPENDENCIES:
   - QCropper (from `./`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  QCropper: 55bce5393c872d5f9c4bfa9ff277e0d98d9f282f
+  QCropper: 050f4a47a0482324f5ab1a7e6b8af5a63c7bb8d6
 
 PODFILE CHECKSUM: 9a4471deb80305aed8c8c7987a935154408d0723
 
