@@ -76,15 +76,9 @@ extension UIImage {
     }
 
     private class func newScaledImage(_ source: CGImage?, with orientation: UIImage.Orientation, to size: CGSize, with quality: CGInterpolationQuality) -> CGImage? {
+        
         guard let source = source,
-            let colorSpace = source.colorSpace,
-            let context = CGContext(data: nil,
-                                    width: Int(size.width),
-                                    height: Int(size.height),
-                                    bitsPerComponent: 8,
-                                    bytesPerRow: 0,
-                                    space: colorSpace,
-                                    bitmapInfo: source.bitmapInfo.rawValue) else {
+            let context = createContext(source, to: size) else {
             return nil
         }
         var srcSize = size
@@ -136,14 +130,7 @@ extension UIImage {
         let outputSize = CGSize(width: outputWidth, height: outputWidth * aspect)
 
         guard let source = sourceScaled,
-            let colorSpace = source.colorSpace,
-            let context = CGContext(data: nil,
-                                    width: Int(outputSize.width),
-                                    height: Int(outputSize.height),
-                                    bitsPerComponent: source.bitsPerComponent,
-                                    bytesPerRow: 0,
-                                    space: colorSpace,
-                                    bitmapInfo: source.bitmapInfo.rawValue) else {
+            let context = createContext(sourceScaled, to: outputSize) else {
             return nil
         }
 
@@ -162,5 +149,24 @@ extension UIImage {
         context.draw(source, in: CGRect(x: -imageViewBoundsSize.width / 2.0, y: -imageViewBoundsSize.height / 2.0, width: imageViewBoundsSize.width, height: imageViewBoundsSize.height))
 
         return context.makeImage()
+    }
+    
+    private class func createContext(_ source: CGImage?, to size: CGSize) -> CGContext? {
+        let context = CGContext(data: nil,
+                                      width: Int(size.width),
+                                      height: Int(size.height),
+                                      bitsPerComponent: 8,
+                                      bytesPerRow: 0,
+                                      space: source?.colorSpace ?? CGColorSpaceCreateDeviceRGB(),
+                                      bitmapInfo: source?.bitmapInfo.rawValue ?? CGImageAlphaInfo.premultipliedLast.rawValue)
+        if context != nil {return context}
+        // 补偿机制
+        return CGContext(data: nil,
+                         width: Int(size.width),
+                         height: Int(size.height),
+                         bitsPerComponent: 8,
+                         bytesPerRow: 0,
+                         space: CGColorSpaceCreateDeviceRGB(),
+                         bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
     }
 }
